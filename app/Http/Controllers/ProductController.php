@@ -39,16 +39,13 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk gambar
         ]);
 
-        // Cek apakah ada file gambar yang diupload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            // Membuat nama file unik berdasarkan timestamp
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            // Memindahkan file ke direktori public/images
             $image->move(public_path('img'), $imageName);
             $imagePath = 'img/' . $imageName; // Menyimpan path gambar
         } else {
-            $imagePath = null; // Jika tidak ada gambar yang diupload
+            $imagePath = null;
         }
 
         // Menyimpan data produk baru ke database
@@ -74,24 +71,56 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $kode_produk)
     {
-        //
+        $produk = Product::where('kode_produk', $kode_produk)->first();
+        return view('component.editProduk', ['produk' => $produk]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $kode_produk)
     {
-        //
+        $request->validate([
+            'nama_produk' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'harga' => 'required|integer',
+            'jumlah_produk' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $produk = Product::where('kode_produk', $kode_produk)->first();
+
+        // Update gambar jika ada gambar baru
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('img'), $imageName);
+            $imagePath = 'img/' . $imageName;
+            $produk->image = $imagePath; // Update path gambar
+        }
+
+        // Update data produk
+        $produk->nama_produk = $request->nama_produk;
+        $produk->deskripsi = $request->deskripsi;
+        $produk->harga = $request->harga;
+        $produk->jumlah_produk = $request->jumlah_produk;
+
+        $produk->save();
+
+        return redirect()->route('produk.index')->with('success', 'Produk berhasil diupdate');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($kode_produk)
     {
-        //
+        Product::where('kode_produk', $kode_produk)->delete();
+
+        return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus');
     }
+
 }

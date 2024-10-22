@@ -3,18 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Laravel</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+    <title>Dashboard</title>
 </head>
-<body>
+<body class="bg-gray-100">
     @include('partials.sidebar')
-    {{-- main content --}}
-    <div class="content">
-    @yield('/home')
-    @yield('/produk')
-    @yield('inputProduk')
+    <div class="main-content">
+
+        {{-- Main Content --}}
+        <div class="content">
+            @yield('home')
+            @yield('inputProduk')
+            @yield('editProduk')
+            @yield('produk')
+        </div>
     </div>
+    {{-- Footer --}}
+    @include('partials.footer')
 
 </body>
 </html>

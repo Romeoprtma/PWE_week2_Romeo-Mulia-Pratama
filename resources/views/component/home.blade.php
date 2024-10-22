@@ -1,6 +1,6 @@
 @extends('layouts.mainDashboard')
 
-@section('/home')
+@section('home')
 <div class="main-content">
     <header>
         <h1>Selamat datang di dashboard Penjualan</h1>
@@ -13,7 +13,7 @@
             <p id="total-products">{{ $totalProducts }}</p>
         </div>
         <div class="card">
-            <h3>Penjualan Hari Inik</h3>
+            <h3>Penjualan Hari Ini</h3>
             <p id="sales-today">{{ $salesToday }}</p>
         </div>
         <div class="card">
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="alert alert-primary" role="alert">
-        a simple primary alert-check it out!
+        A simple primary alert-check it out!
     </div>
 
     {{-- Sales Chart --}}
@@ -35,5 +35,4 @@
         <canvas id="salesChart"></canvas>
     </div>
 </div>
-
 @endsection

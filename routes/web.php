@@ -4,14 +4,16 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/home', function () {
-    return view('component.home');
-});
-
+//Home Controller
 Route::get('/', [HomeController::class, 'index']);
-Route::resource('produk', ProductController::class);
 
-Route::get('/inputProduk', function () {
-    return view('component.inputProduk');
-});
+//Product Controller
+Route::resource('produk', ProductController::class);
+Route::get('/produk/{kode_produk}/edit', [ProductController::class, 'edit'])->name('produk.edit');
+Route::put('/produk/{kode_produk}', [ProductController::class, 'update'])->name('produk.update');
+Route::delete('/produk/{kode_produk}', [ProductController::class, 'destroy'])->name('produk.destroy');
+
+Route::get('/inputProduk', [ProductController::class, 'create']);
+
+
 

@@ -34,6 +34,6 @@
         <input type="file" name="image" id="image" class="form-control">
     </div>
 
-    <button type="submit" class="btn btn-primary">Tambah Produk</button>
+    <button type="submit" class="card-button">Tambah Produk</button>
 </form>
 @endsection

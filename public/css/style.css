@@ -146,8 +146,24 @@
     cursor: pointer;
     font-size: 14px;
     }
+
+    .button-delete{
+    background-color: #df1515;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    }
+
     .card-button:hover {
     background-color: #2980b9;
+    }
+
+    .button-delete:hover {
+    background-color: #ac1313;
     }
 
     /* Footer */
