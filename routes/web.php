@@ -14,6 +14,7 @@ Route::put('/produk/{kode_produk}', [ProductController::class, 'update'])->name(
 Route::delete('/produk/{kode_produk}', [ProductController::class, 'destroy'])->name('produk.destroy');
 
 Route::get('/inputProduk', [ProductController::class, 'create']);
-
+Route::get('/laporan', [ProductController::class, 'ViewLaporan']);
+Route::get('/report', [ProductController::class, 'print']);
 
 

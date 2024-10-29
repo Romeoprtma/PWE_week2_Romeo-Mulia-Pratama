@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\product;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProductController extends Controller
 {
@@ -15,6 +16,23 @@ class ProductController extends Controller
     {
         $produk = product::all();
         return view('component.produk',['produk' => $produk]);
+    }
+
+    //Menampilkan Laman Laporan
+    public function ViewLaporan()
+    {
+        $produk = product::all();
+        return view('component.laporan', ['produk' => $produk]);
+    }
+
+    //Print PDF
+    public function print()
+    {
+        $produk = product::all();
+
+        $pdf = Pdf::loadView('component.report', compact('produk'));
+
+        return $pdf->stream('laporan-produk.pdf');
     }
 
     /**

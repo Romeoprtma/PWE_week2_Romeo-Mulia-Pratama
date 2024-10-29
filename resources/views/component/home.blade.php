@@ -32,7 +32,13 @@
     {{-- Sales Chart --}}
     <div id="chart">
         <h2>Grafik Penjualan Bulanan</h2>
-        <canvas id="salesChart"></canvas>
+        {{-- <canvas id="salesChart"></canvas> --}}
+        {!!$chart->container()!!}
     </div>
 </div>
+
+<script src="{{ $chart->cdn()}}"></script>
+{{ $chart->script()}}
+
+
 @endsection

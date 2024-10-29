@@ -18,6 +18,8 @@
             @yield('inputProduk')
             @yield('editProduk')
             @yield('produk')
+            @yield('laporan')
+            @yield('report')
         </div>
     </div>
     {{-- Footer --}}
