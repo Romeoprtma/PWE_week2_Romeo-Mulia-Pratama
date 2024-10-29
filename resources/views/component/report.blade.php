@@ -38,7 +38,7 @@ h2 {
 </head>
 <body>
     <div class="date">
-        Tanggal: {{ now()->format('d-m-Y H:i') }} <!-- Menampilkan tanggal dan waktu saat ini -->
+        Tanggal: {{ now()->setTimeZone('Asia/Jakarta')->format('d-m-Y H:i') }} <!-- Menampilkan tanggal dan waktu saat ini -->
     </div>
     <h2>Laporan Produk</h2>
     <table>
