@@ -17,7 +17,7 @@ class Product extends Model
     protected $table = 'products';
 
     protected $primaryKey = 'kode_produk';
-    protected $fillable = ['kode_produk', 'nama_produk', 'deskripsi', 'harga', 'jumlah_produk', 'image'];
+    protected $fillable = ['kode_produk', 'nama_produk', 'deskripsi', 'harga', 'jumlah_produk', 'image', 'user_id'];
 
     public $timestamps = true;
 }

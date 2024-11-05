@@ -5,7 +5,7 @@
     <h1 class="h1">Daftar Produk</h1>
     <p>Temukan produk terbaik untuk kebutuhan</p>
 </div>
-<form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data" class="container mt-5">
+<form action="{{ route(Auth::user()->role. 'produk.store') }}" method="POST" enctype="multipart/form-data" class="container mt-5">
     @csrf
     <div class="mb-3">
         <label for="nama_produk" class="form-label">Nama Produk:</label>

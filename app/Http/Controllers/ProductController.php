@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\product;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -14,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $produk = product::all();
+        $isAdmin = Auth::user()->role == 'admin';
+        $produk = $isAdmin ? product::all() : product::where('user_id', Auth::user()->id)->gert();
         return view('component.produk',['produk' => $produk]);
     }
 
@@ -73,9 +75,10 @@ class ProductController extends Controller
             'harga' => $request->harga,
             'jumlah_produk' => $request->jumlah_produk,
             'image' => $imagePath, // Menyimpan path gambar ke database
+            'user_id' => Auth::user()->id
         ]);
 
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan');
+        return redirect()->route(Auth::user()->role. 'produk.index')->with('success', 'Produk berhasil ditambahkan');
     }
 
     /**
