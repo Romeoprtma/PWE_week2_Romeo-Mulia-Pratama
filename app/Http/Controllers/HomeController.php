@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
 use ArielMejiaDev\LarapexCharts\Facades\LarapexChart;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,38 +16,53 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $isAdmin = Auth::user()->role === 'admin';
-        $produkPerHariQuery=Product::selectRaw('DATE(created_at) as date, COUNT(*) as total')
-            ->groupBy('date')
-            ->orderBy('date','asc')
-            ->get();
+        {
+            $isAdmin = Auth::user()->role === 'admin';
+
+            $produkPerHariQuery = Product::selectRaw('DATE(created_at) as date, COUNT(*) as total')
+                ->groupBy('date')
+                ->orderBy('date', 'asc');
 
             if (!$isAdmin) {
                 $produkPerHariQuery->where('user_id', Auth::id());
             }
-        $produkPerHari = $produkPerHariQuery->get();
-        $dates=[];
-        $totals=[];
-        foreach ($produkPerHari as $item){
-            $dates[]=Carbon::parse($item->date)->format('Y-m-d');
-            $totals[]=$item->total;
-        }
-        $chart=LarapexChart::barChart()
-            ->setTitle('Produk Ditambahkan Per Hari')
-            ->setSubtitle('Data Penambahan Produk Harian')
-            ->addData('Jumlah Produk',$totals)
-            ->setXAxis($dates);
+
+            // Execute the query to get results
+            $produkPerHari = $produkPerHariQuery->get();
+
+            $dates = [];
+            $totals = [];
+
+            foreach ($produkPerHari as $item) {
+                $dates[] = Carbon::parse($item->date)->format('Y-m-d');
+                $totals[] = $item->total;
+            }
+
+            $chart = LarapexChart::barChart()
+                ->setTitle('Produk Ditambahkan Per Hari')
+                ->setSubtitle('Data Penambahan Produk Harian')
+                ->addData('Jumlah Produk', $totals)
+                ->setXAxis($dates);
 
             $totalProductsQuery = Product::query();
-        $data=[
-            'totalProducts'=>$totalProductsQuery::count(),
-            'salesToday'=>130,
-            'totalRevenue'=>'Rp 75.000.000',
-            'registeredUsers'=>350,
-            'chart'=>$chart
-        ];
-        return view('component.home', $data);
+            if ($isAdmin) {
+                // Jika admin, hitung semua pengguna terdaftar
+                $registeredUsers = User::count();
+            } else {
+                // Jika bukan admin, hitung hanya pengguna yang sedang login
+                $registeredUsers = User::where('id', Auth::id())->count();
+            }
+            $data = [
+                'totalProducts' => $totalProductsQuery->count(),
+                'salesToday' => 130,
+                'totalRevenue' => 'Rp 75.000.000',
+                'registeredUsers' => $registeredUsers,
+                'chart' => $chart,
+            ];
+
+            return view('component.home', $data);
     }
+}
 
     /**
      * Show the form for creating a new resource.

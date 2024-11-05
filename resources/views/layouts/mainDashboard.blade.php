@@ -20,6 +20,7 @@
             @yield('produk')
             @yield('laporan')
             @yield('report')
+            @yield('userProduk')
         </div>
     </div>
     {{-- Footer --}}

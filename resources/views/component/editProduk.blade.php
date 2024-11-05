@@ -5,7 +5,7 @@
         <p>Perbarui informasi produk yang ingin diedit</p>
     </div>
 
-    <form action="{{ route('produk.update', $produk->kode_produk) }}" method="POST" enctype="multipart/form-data" class="container mt-5">
+    <form action="{{ route(Auth::user()->role. 'produk.update', $produk->kode_produk) }}" method="POST" enctype="multipart/form-data" class="container mt-5">
         @csrf
         @method('PUT')
 

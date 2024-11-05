@@ -130,7 +130,7 @@ class ProductController extends Controller
 
         $produk->save();
 
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil diupdate');
+        return redirect()->route(Auth::user()->role. 'produk.index')->with('success', 'Produk berhasil diupdate');
     }
 
 
@@ -141,7 +141,7 @@ class ProductController extends Controller
     {
         Product::where('kode_produk', $kode_produk)->delete();
 
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus');
+        return redirect()->route(Auth::user()->role. 'produk.index')->with('success', 'Produk berhasil dihapus');
     }
 
 }

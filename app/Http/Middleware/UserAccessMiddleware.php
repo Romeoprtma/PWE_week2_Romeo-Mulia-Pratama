@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserAccessMiddleware
@@ -16,7 +16,7 @@ class UserAccessMiddleware
      */
     public function handle(Request $request, Closure $next, $userType): Response
     {
-        if(Auth::user()-> role == $userType){
+        if(FacadesAuth::user()-> role == $userType){
             return $next($request);
         }
 
